@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--一对多的映射 -->
+<mapper namespace="com.tl666.comments.mapper.CommentsMapper">
+    <select id="findByOwnerId" resultMap="Comnents">
+	select * from comments_info where owner_id = #{ownerId}
+	</select>
+    <resultMap type="com.tl666.comments.pojo.CommentsInfo" id="Comnents">
+        <result property="commentId" column="comment_id" />
+        <collection property="listCommentsReply" javaType="ArrayList" ofType="com.tl666.comments.pojo.CommentsReply" column="comment_id"
+                    select="getSonComments"></collection>
+    </resultMap>
+    <select id="getSonComments" resultType="com.tl666.comments.pojo.CommentsReply">
+	select * from comments_reply where comment_id = #{commentId}
+	</select>
+
+    <insert id="addRootComments" parameterType="com.tl666.comments.pojo.CommentsInfo" keyProperty="id">
+        <selectKey keyProperty='id' resultType='int' order='AFTER'  >
+            select LAST_INSERT_ID();
+        </selectKey>
+        insert into comments_info (id,comment_id,owner_id,type,from_id,from_name,from_avatar,like_num,content,create_time)
+        values(#{id},#{commentId},#{ownerId},#{type},#{fromId},#{fromName},#{fromAvatar},#{likeNum},#{content},#{createTime})
+    </insert>
+</mapper>

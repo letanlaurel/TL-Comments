@@ -12,11 +12,10 @@ import java.util.Date;
 @Data
 public class CommentsReply implements Serializable{
 
-
-    //评论主键id
+    //父评论的主键id
     private String id;
 
-    //该条评论的父评论的唯一标识
+    //该条评论的唯一标识
     private String commentId;
 
     //评论者id

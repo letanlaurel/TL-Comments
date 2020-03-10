@@ -26,6 +26,11 @@ public class ResultDT<T> implements Serializable{
      */
     private T data;
 
+    /**
+     * 附加数据
+     */
+    private T addData;
+
     public ResultDT() {
     }
 }

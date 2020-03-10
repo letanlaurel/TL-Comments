@@ -1,8 +1,9 @@
 package com.tl666.comments.service.impl;
 
 import com.tl666.comments.mapper.CommentsMapper;
-import com.tl666.comments.pojo.CommentsInfo;
+import com.tl666.comments.pojo.CommentsRoot;
 import com.tl666.comments.pojo.CommentsReply;
+import com.tl666.comments.pojo.Liked;
 import com.tl666.comments.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,7 +20,7 @@ public class CommentServiceImpl implements CommentService {
     CommentsMapper commentsMapper;
 
     @Override
-    public List<CommentsInfo> findByOwnerIdService(String ownerId) {
+    public List<CommentsRoot> findByOwnerIdService(String ownerId) {
         if(ownerId == null || ownerId.equals("")){
             return null;
         }
@@ -27,11 +28,11 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public boolean addRootCommentsService(CommentsInfo commentsInfo) {
-        if(commentsInfo == null){
+    public boolean addRootCommentsService(CommentsRoot commentsRoot) {
+        if(commentsRoot == null){
             return false;
         }
-        return commentsMapper.addRootComments(commentsInfo);
+        return commentsMapper.addRootComments(commentsRoot);
     }
 
     @Override
@@ -40,5 +41,37 @@ public class CommentServiceImpl implements CommentService {
             return false;
         }
         return commentsMapper.addSonComments(commentsReply);
+    }
+
+    @Override
+    public boolean addLikedService(Liked liked) {
+        if(liked == null)
+            return false;
+        return commentsMapper.addLiked(liked);
+    }
+
+    @Override
+    public List<Liked> getListLikedService(String userId) {
+        return commentsMapper.getListLiked(userId);
+    }
+
+    @Override
+    public boolean updateLikedService(Liked liked) {
+        return commentsMapper.updateLiked(liked);
+    }
+
+    @Override
+    public Liked checkedLikeService(Liked liked) {
+        return commentsMapper.checkedLike(liked);
+    }
+
+    @Override
+    public boolean updateRootLikeNumService(Liked liked) {
+        return commentsMapper.updateRootLikeNum(liked);
+    }
+
+    @Override
+    public boolean updateReplyLikeNumService(Liked liked) {
+        return commentsMapper.updateReplyLikeNum(liked);
     }
 }

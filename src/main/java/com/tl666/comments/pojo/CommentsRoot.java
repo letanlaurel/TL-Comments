@@ -11,7 +11,7 @@ import java.util.List;
  * 评论表主表
  */
 @Data
-public class CommentsInfo implements Serializable{
+public class CommentsRoot implements Serializable{
 
     //评论主键id
     private Integer id;

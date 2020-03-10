@@ -2,5 +2,8 @@ spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
     username: root
-    password: 000000
+    password: tl19980504
     url: jdbc:mysql://127.0.0.1/comments?characterEncoding=utf-8&useSSL=false
+mybatis:
+  configuration:
+    mapUnderscoreToCamelCase: true  #开启mabatis的驼峰命名法

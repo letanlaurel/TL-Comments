@@ -86,7 +86,7 @@ public class CommentsHandler {
     }
 
     /**
-     * 点赞模块，暂时未完善
+     * 点赞模块，已完善
      * @param liked
      * @return
      */

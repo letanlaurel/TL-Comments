@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+    .liked{
+        color: red;
+    }
+</style>
+<body>
+    <div id="tlgg">
+
+    </div>
+    <button id="bt">显示评论</button>
+    <div>
+        <form id="aa_form">
+            <textarea name="content" id="content" placeholder="留下你对本文的看法..." maxlength="200" oninput="textchange(this)"></textarea><br>
+            <span>还能输入<span id="textCount">200</span>个字符!</span>
+            <button type="button" id="qx" hidden onclick="quxiao(this)">取消回复</button>
+            <button type="button" id="tj" disabled>提交</button>
+        </form>
+    </div>
+</body>
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/template-native.js"></script>
+<script type="text/javascript" src="js/jquery.form.js"></script>
+<script type="text/javascript" src="js/comment.js"></script>
+<script type="text/html" id="ta">
+    <ul>
+        <% for(var i = 0; i < data.length; i++) {%>
+        <li><span class="face"><img src="icon.jpg" alt="" style="height: 5%;width: 5%"></span>
+            <span class="text"><strong><%=data[i].fromName%></strong> (<%=data[i].createTime%>) 说：<br />
+        <%=data[i].content%></span><br>
+            <a href="#" id="star" class="" data-id="<%=data[i].id%>" data-commentId="<%=data[i].commentId%>" data-commType="root" data-likeNum="<%=data[i].likeNum%>" data-likeStatus="" onclick="dianzan(this)"><%=data[i].likeNum%></a>人赞
+            <a href="#" onclick="receive('<%=data[i].id%>','<%=data[i].ownerId%>','<%=data[i].fromId%>','<%=data[i].fromName%>')">回复</a>
+            <a href="#" onclick="showSonComments(this,'<%=i%>')">查看回复</a><span>(<%=data[i].listCommentsReply.length%>)</span>
+        <ul id="sonComments<%=i%>" hidden>
+                    <% for(var j = 0; j < data[i].listCommentsReply.length; j++) {%>
+            <li>
+                <span class="text"><a href="#" style="color: #01AAED">
+                    <%=data[i].listCommentsReply[j].fromName%></a>:<a href="" style="color: #01AAED">
+                    @<%=data[i].listCommentsReply[j].toName%></a>&nbsp;&nbsp;<%=data[i].listCommentsReply[j].content%></span><br>
+                <a href="#" onclick="dianzan(this)" data-commentId="<%=data[i].listCommentsReply[j].commentId%>" data-commType="reply" data-likeNum="<%=data[i].listCommentsReply[j].likeNum%>" data-likeStatus=""><%=data[i].listCommentsReply[j].likeNum%></a>人赞
+                <a href="#" onclick="receive('<%=data[i].listCommentsReply[j].id%>',null,'<%=data[i].listCommentsReply[j].fromId%>','<%=data[i].listCommentsReply[j].fromName%>')">回复</a>
+            </li>
+                    <%}%>
+        </ul>
+        </li>
+        <%}%>
+    </ul>
+</script>
+</html>
